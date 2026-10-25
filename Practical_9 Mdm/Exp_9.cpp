@@ -1,31 +1,28 @@
 //Part A: Arduino UNO
 
-#include <SPI.h>
+#include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <math.h>
 
-#define WIDTH 128
-#define HEIGHT 64
-#define OLED_DC 9
-#define OLED_RST 8
-#define OLED_CS 10
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
 
 Adafruit_SSD1306 display(
-  WIDTH, HEIGHT, &SPI,
-  OLED_DC, OLED_RST, OLED_CS
+  SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1
 );
 
 void setup() {
-  if (!display.begin(SSD1306_SWITCHCAPVCC)) {
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     while (1);
   }
 
   display.clearDisplay();
+
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(20, 2);
-  display.println("SPI OLED GRAPH");
+  display.println("OLED GRAPH");
 
   display.drawLine(5, 55, 123, 55, SSD1306_WHITE);
   display.drawLine(5, 18, 5, 55, SSD1306_WHITE);
@@ -44,38 +41,34 @@ void setup() {
 }
 
 void loop() {
-}
-
+ 
+ 
 //Part B : Esp32
 
-#include <SPI.h>
+#include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <math.h>
 
-#define WIDTH 128
-#define HEIGHT 64
-#define OLED_DC 16
-#define OLED_RST 17
-#define OLED_CS 5
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
 
 Adafruit_SSD1306 display(
-  WIDTH, HEIGHT, &SPI,
-  OLED_DC, OLED_RST, OLED_CS
+  SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1
 );
 
 void setup() {
-  SPI.begin(18, -1, 23, 5);
+  Wire.begin(21, 22);
 
-  if (!display.begin(SSD1306_SWITCHCAPVCC)) {
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     while (1);
   }
 
   display.clearDisplay();
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(20, 2);
-  display.println("ESP32 SPI GRAPH");
+  display.setCursor(25, 2);
+  display.println("ESP32 GRAPH");
 
   display.drawLine(5, 55, 123, 55, SSD1306_WHITE);
   display.drawLine(5, 18, 5, 55, SSD1306_WHITE);
